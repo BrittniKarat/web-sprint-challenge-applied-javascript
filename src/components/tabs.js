@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const Tabs = (topics) => {
   // TASK 3
   // ---------------------
@@ -41,6 +43,43 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
+  const element = document.querySelector(selector);
+  axios.get(`http://localhost:5000/api/topics`)
+    .then(res => {
+      const topics = Array.from(res.data.topics);
+      
+    element.append(Tabs(topics[1],topics[0], topics[2]));
+    })
+    .catch(err => {
+      console.error(err)
+    });
+
+    return element
 }
 
+console.log(tabsAppender('body'))
+
 export { Tabs, tabsAppender }
+
+// To make the tabs refresh with 3 random items from the provided API array, I did it this way.
+
+// const tabsAppender = (selector) => {
+//   const element = document.querySelector(selector);
+//   axios.get(`http://localhost:5000/api/topics`)
+//     .then(res => {
+//       const topics = Array.from(res.data.topics);
+//       const arr = [];
+//       for(let i = 0; i < 3; i++){
+//         const rando = Math.floor(Math.random() * topics.length);
+//         arr.push(topics[rando]);
+//         topics.splice(rando, 1);
+//       };
+
+//     element.append(Tabs(arr));
+//     })
+//     .catch(err => {
+//       console.error(err)
+//     });
+
+//     return element
+// }

@@ -41,9 +41,14 @@ name.textContent = article.authorName;
 
 cardDiv.addEventListener('click' , function(){
 console.log(headline);
+})
+
+return cardDiv
 }
 
 const cardAppender = (selector) => {
+  
+  
   // TASK 6
   // ---------------------
   // Implement this function that takes a css selector as its only argument.
