@@ -16,19 +16,17 @@ const Tabs = (topics) => {
   // </div>
   //
   const topic = document.createElement('div');
-  const arr = [...topics]
- 
+    topic.classList.add('topics')
   for(let i = 0; i < topics.length; i++){
-
-    arr[i] = document.createElement('div');
-    arr[i].classList.add('tab');
-    arr[i] = topics[i];
-    // topic.appendChild(arr[i]);
+    const tab = document.createElement('div');
+    tab.classList.add('tab');
+    tab.textContent = topics[i];
+    topic.appendChild(tab);
+    
   }
-  console.log(arr)
   return topic;
 }
-console.log(Tabs(['Butcher', 'Baby', 'Twill', 'FunTimes']))
+// console.log(Tabs(['Butcher']))
 
 const tabsAppender = (selector) => {
   // TASK 4
@@ -41,46 +39,14 @@ const tabsAppender = (selector) => {
   const element = document.querySelector(selector);
     axios.get(`http://localhost:5000/api/topics`)
       .then(res => {
-        const topics = Array.from(res.data.topics);
-        const arr = [];
-        for(let i = 0; i < 3; i++){
-          const rando = Math.floor(Math.random() * topics.length);
-          arr.push(topics[rando]);
-          topics.splice(rando, 1);
-        };
-  
-      element.append(Tabs(arr));
+      element.append(Tabs(res.data.topics));
       })
       .catch(err => {
         console.error(err)
       });
-  
       return element
 }
 
 
 
 export { Tabs, tabsAppender }
-
-// To make the tabs refresh with 3 random items from the provided API array, I did it this way.
-
-// const tabsAppender = (selector) => {
-//   const element = document.querySelector(selector);
-//   axios.get(`http://localhost:5000/api/topics`)
-//     .then(res => {
-//       const topics = Array.from(res.data.topics);
-//       const arr = [];
-//       for(let i = 0; i < 3; i++){
-//         const rando = Math.floor(Math.random() * topics.length);
-//         arr.push(topics[rando]);
-//         topics.splice(rando, 1);
-//       };
-
-//     element.append(Tabs(arr));
-//     })
-//     .catch(err => {
-//       console.error(err)
-//     });
-
-//     return element
-// }
